@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Document App</title>
+    </head>
+    <body>
+        <textarea id="textbox" style="width: 100%; height: calc(100% - 30.5px);"></textarea>
+        <br><button id="button" style="margin-top: 8px;">Save Document</button>
+
+        <script type="module">
+            const textbox = document.querySelector('#textbox');
+            const button = document.querySelector('#button');
+
+            async function loadDocument() {
+                const response = await fetch('/document');
+                const text = await response.text();
+
+                textbox.value = text;
+            }
+
+            async function saveDocument() {
+                await fetch("/document", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ content: textbox.value })
+                })
+            }
+
+            await loadDocument();
+
+            button.addEventListener('click', saveDocument);
+        </script>
+    </body>
+</html>
