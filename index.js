@@ -16,7 +16,7 @@ app.get('/document', async (req, res) => {
 app.post('/document', async (req, res) => {
     await fs.writeFile('document.txt', req.body.content);
 
-    res.send("");
+    res.end();
 });
 
 app.listen(80);
